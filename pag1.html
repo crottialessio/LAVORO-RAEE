@@ -5,61 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAEE – il presente che non possiamo ignorare</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-
+ 
   <style>
-    :root {
-      --bg:         #ece8df;
-      --green-dark: #2c3a2c;
-      --text-body:  #3a3a3a;
-      --rule:       #5a7a54;
-      --nav-bg:     #69765B;
-      --nav-accent: #EDFFEA;
+ 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     body {
-        background-image: url("img sfondo sito.png");
-        background-size: cover; 
-        background-position: center; 
-        background-repeat: no-repeat;
-        background-color: var(--bg);
-        font-family: 'Lato', sans-serif;
-        color: var(--text-body);
-        min-height: 100vh;
-        display: flex;
-        justify-content: left;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
+      background-color: #ece8df;
+      background-image: url("img sfondo sito.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: 'Lato', sans-serif;
+      color: #3a3a3a;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
-
+ 
     /* ── Navbar ── */
+ 
     .navbar {
-      background: var(--nav-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 52px;
+      background-color: #69765B;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 20px;
-      height: 52px;
-      position: fixed;
-      z-index: 10;
-      width:100%;
+      z-index: 100;
     }
-
+ 
     .nav-logo {
+      color: #EDFFEA;
       font-weight: 700;
       font-size: 0.8rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--nav-accent);
     }
-
+ 
     .hamburger {
       background: none;
       border: none;
@@ -69,35 +58,32 @@
       gap: 5px;
       padding: 4px;
     }
-
+ 
     .hamburger span {
       display: block;
       width: 24px;
       height: 2px;
-      background: var(--nav-accent);
+      background-color: #EDFFEA;
       border-radius: 2px;
-      transition: transform 0.3s, opacity 0.3s;
     }
-
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
+ 
+    /* ── Menu a tendina ── */
+ 
     .nav-menu {
-      position: absolute;
+      display: none;       /* nascosto di default */
+      position: fixed;
       top: 52px;
       left: 0;
-      right: 0;
-      background: var(--nav-bg);
-      display: flex;
+      width: 100%;
+      background-color: #69765B;
       flex-direction: column;
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.35s ease;
+      z-index: 99;
     }
-
-    .nav-menu.open { max-height: 300px; }
-
+ 
+    .nav-menu.aperto {
+      display: flex;       /* visibile quando ha la classe "aperto" */
+    }
+ 
     .nav-menu a {
       padding: 14px 24px;
       color: #e8e4d8;
@@ -105,47 +91,54 @@
       font-size: 0.85rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      transition: background 0.2s, color 0.2s;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    .nav-menu a:hover { background: rgba(0,0,0,0.15); color: var(--nav-accent); }
-
+ 
+    .nav-menu a:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+      color: #EDFFEA;
+    }
+ 
     /* ── Contenuto ── */
+ 
     .content {
-      padding: 48px 32px 32px;
+      max-width: 420px;
+      padding: 48px 32px 32px 32px;
     }
-
+ 
     .title {
       font-family: 'Playfair Display', serif;
       font-weight: 900;
       font-size: 2.4rem;
       line-height: 1.15;
-      color: var(--green-dark);
+      color: #2c3a2c;
+      margin-top: 50px;
       margin-bottom: 20px;
-      margin-top:50px;
     }
-
+ 
+    /* Lineetta verde decorativa */
     .rule {
       width: 40px;
       height: 3px;
-      background: var(--rule);
+      background-color: #5a7a54;
       margin-bottom: 20px;
     }
-
+ 
     .body-text {
       font-size: 0.93rem;
       line-height: 1.7;
       margin-bottom: 32px;
     }
-
+ 
+    /* ── Bottone ── */
+ 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      border: 1.5px solid var(--green-dark);
-      color: var(--green-dark);
-      background: transparent;
+      border: 1.5px solid #2c3a2c;
+      color: #2c3a2c;
+      background-color: transparent;
       padding: 12px 22px;
       font-family: 'Lato', sans-serif;
       font-size: 0.78rem;
@@ -154,56 +147,69 @@
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.25s, color 0.25s;
     }
-
-    .btn:hover { background: var(--green-dark); color: var(--bg); }
-    .btn .arrow { transition: transform 0.25s; }
-    .btn:hover .arrow { transform: translateX(4px); }
+ 
+    .btn:hover {
+      background-color: #2c3a2c;
+      color: #ece8df;
+    }
+ 
   </style>
 </head>
 <body>
-
-<div class="card">
-
+ 
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-logo">RAEE</div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
+    <button class="hamburger" id="hamburger" aria-label="Apri menu">
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
-    <div class="nav-menu" id="navMenu">
-      <a href="#">Home</a>
-      <a href="#">Cos'è il RAEE</a>
-      <a href="#">Dati e statistiche</a>
-      <a href="#">Come riciclare</a>
-      <a href="#">Contatti</a>
-    </div>
   </nav>
-
+ 
+  <!-- Menu a tendina -->
+  <div class="nav-menu" id="navMenu">
+    <a href="#">Home</a>
+    <a href="#">Cos'è il RAEE</a>
+    <a href="#">Dati e statistiche</a>
+    <a href="#">Come riciclare</a>
+    <a href="#">Contatti</a>
+  </div>
+ 
+  <!-- Contenuto -->
   <div class="content">
-    <div class="title">RAEE:<br>il presente che<br>non possiamo<br>ignorare.</div>
+    <div class="title">
+      RAEE:<br>
+      il presente che<br>
+      non possiamo<br>
+      ignorare.
+    </div>
     <div class="rule"></div>
     <div class="body-text">
-      Sai dove finiscono i tuoi dispositivi?<br> 
+      Sai dove finiscono i tuoi dispositivi?<br>
       Scopri la verità sui RAEE
     </div>
-    <a href="#" class="btn">Scopri di più <span class="arrow">→</span></a>
+    <a href="#" class="btn">Scopri di più →</a>
   </div>
-
-</div>
-
-<script>
-  const btn  = document.getElementById('hamburger');
-  const menu = document.getElementById('navMenu');
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('open');
-    menu.classList.toggle('open');
-  });
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    btn.classList.remove('open');
-    menu.classList.remove('open');
-  }));
-</script>
-
+ 
+  <script>
+    var btn  = document.getElementById('hamburger');
+    var menu = document.getElementById('navMenu');
+ 
+    // Apre o chiude il menu al click sull'hamburger
+    btn.addEventListener('click', function() {
+      menu.classList.toggle('aperto');
+    });
+ 
+    // Chiude il menu quando si clicca una voce
+    var voci = menu.querySelectorAll('a');
+    for (var i = 0; i < voci.length; i++) {
+      voci[i].addEventListener('click', function() {
+        menu.classList.remove('aperto');
+      });
+    }
+  </script>
+ 
 </body>
 </html>
