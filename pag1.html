@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEE – il presente che non possiamo ignorare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:         #ece8df;
+      --green-dark: #2c3a2c;
+      --text-body:  #3a3a3a;
+      --rule:       #5a7a54;
+      --nav-bg:     #69765B;
+      --nav-accent: #EDFFEA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background-image: url("img sfondo sito.png");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-color: var(--bg);
+        font-family: 'Lato', sans-serif;
+        color: var(--text-body);
+        min-height: 100vh;
+        display: flex;
+        justify-content: left;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 52px;
+      position: fixed;
+      z-index: 10;
+      width:100%;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--nav-accent);
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--nav-accent);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-menu {
+      position: absolute;
+      top: 52px;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease;
+    }
+
+    .nav-menu.open { max-height: 300px; }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      color: #e8e4d8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-menu a:hover { background: rgba(0,0,0,0.15); color: var(--nav-accent); }
+
+    /* ── Contenuto ── */
+    .content {
+      padding: 48px 32px 32px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--green-dark);
+      margin-bottom: 20px;
+      margin-top:50px;
+    }
+
+    .rule {
+      width: 40px;
+      height: 3px;
+      background: var(--rule);
+      margin-bottom: 20px;
+    }
+
+    .body-text {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid var(--green-dark);
+      color: var(--green-dark);
+      background: transparent;
+      padding: 12px 22px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .btn:hover { background: var(--green-dark); color: var(--bg); }
+    .btn .arrow { transition: transform 0.25s; }
+    .btn:hover .arrow { transform: translateX(4px); }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <nav class="navbar">
+    <div class="nav-logo">RAEE</div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="#">Home</a>
+      <a href="#">Cos'è il RAEE</a>
+      <a href="#">Dati e statistiche</a>
+      <a href="#">Come riciclare</a>
+      <a href="#">Contatti</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="title">RAEE:<br>il presente che<br>non possiamo<br>ignorare.</div>
+    <div class="rule"></div>
+    <div class="body-text">
+      Sai dove finiscono i tuoi dispositivi?<br> 
+      Scopri la verità sui RAEE
+    </div>
+    <a href="#" class="btn">Scopri di più <span class="arrow">→</span></a>
+  </div>
+
+</div>
+
+<script>
+  const btn  = document.getElementById('hamburger');
+  const menu = document.getElementById('navMenu');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+  }));
+</script>
+
+</body>
+</html>
