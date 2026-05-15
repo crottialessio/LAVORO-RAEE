@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raccolta RAEE per Raggruppamento</title>
+  <!-- Chart.js importato via CDN, nessuna installazione necessaria -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    body {
+      background: linear-gradient(135deg, #0a1f33 0%, #0d2b47 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 32px 16px;
+      color: #e0f0ff;
+    }
+ 
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+ 
+    p.subtitle {
+      color: #7aadcc;
+      font-size: 13px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+ 
+    .chart-wrapper {
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+ 
+  <h1>Raccolta RAEE per Raggruppamento</h1>
+  <p class="subtitle">Totale: 90.054.210 kg</p>
+ 
+  <div class="chart-wrapper">
+    <canvas id="raeeChart"></canvas>
+  </div>
+ 
+  <script>
+    const data = {
+      labels: [
+        "R1 – Freddo / Grandi Bianchi",
+        "R2 – Lavatrici / Grandi Elettrodomestici",
+        "R3 – TV / Monitor",
+        "R4 – Piccoli Elettrodomestici",
+        "R5 – Sorgenti Luminose"
+      ],
+      datasets: [{
+        data: [23748313, 37844979, 8382279, 20621246, 457393],
+        backgroundColor: ["#7EC8E3", "#9B59B6", "#E67E22", "#27AE60", "#F1C40F"],
+        borderWidth: 0,
+        hoverOffset: 12
+      }]
+    };
+ 
+    Chart.register(ChartDataLabels);
+ 
+    const ctx = document.getElementById("raeeChart").getContext("2d");
+ 
+    new Chart(ctx, {
+      type: "doughnut",
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          datalabels: {
+            color: "#ffffff",
+            font: { size: 13, weight: "bold" },
+            formatter: function(value, context) {
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const pct = ((value / total) * 100).toFixed(1);
+              return pct < 2 ? "" : pct + "%";
+            }
+          },
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "#c8dff0",
+              font: { size: 12 },
+              padding: 16,
+              boxWidth: 14,
+              boxHeight: 14
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.parsed;
+                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                const pct = ((value / total) * 100).toFixed(1);
+                const formatted = value.toLocaleString("it-IT");
+                return ` ${formatted} kg  (${pct}%)`;
+              }
+            },
+            backgroundColor: "#0d2137",
+            borderColor: "#2a4a6b",
+            borderWidth: 1,
+            titleColor: "#e0f0ff",
+            bodyColor: "#90cdf4",
+            padding: 10
+          }
+        }
+      }
+    });
+  </script>
+ 
+</body>
+</html>
