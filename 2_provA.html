@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEE – Cosa sono i RAEE?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde-scuro: #2c3a2c;
+      --crema: #f5f2ec;
+      --testo: #3a3a3a;
+    }
+
+    body {
+      background-color: var(--crema);
+      font-family: 'Lato', sans-serif;
+      color: var(--testo);
+    }
+
+    /* ════════════════════════════════
+        NAVBAR (identica a pag1)
+       ════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 52px;
+      background-color: var(--verde-scuro);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      color: #EDFFEA;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links-desktop { display: none; }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: #EDFFEA;
+      border-radius: 2px;
+    }
+
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 52px; left: 0;
+      width: 100%;
+      background-color: var(--verde-scuro);
+      flex-direction: column;
+      z-index: 99;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .nav-menu.aperto { display: flex; }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      color: #e8e4d8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(0,0,0,0.15);
+      color: #EDFFEA;
+    }
+
+    /* ════════════════════════════════
+        CONTAINER (centra il contenuto)
+       ════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ════════════════════════════════
+        HERO — sfondo illustrazione pag2
+       ════════════════════════════════ */
+    .hero {
+      background-image: url("img_sfondo_prima_parte_pag_2.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding-top: 52px; /* compensa navbar fissa */
+    }
+
+    .hero .container {
+      padding-top: 40px;
+      padding-bottom: 32px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--verde-scuro);
+      margin-bottom: 24px;
+    }
+
+    .body-text {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: var(--testo);
+      margin-bottom: 24px;
+    }
+
+    /* Callout box con icona */
+    .callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background-color: rgba(255,255,255,0.45);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(4px);
+    }
+
+    .callout-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background-color: #69765B;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .callout-text {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--verde-scuro);
+      font-style: italic;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--verde-scuro);
+      margin-bottom: 20px;
+    }
+
+    .video-box {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background-color: #000000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      margin-bottom: 28px;
+    }
+
+    .video-box iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .freccia {
+      text-align: center;
+      font-size: 1.6rem;
+      color: var(--verde-scuro);
+      padding-bottom: 28px;
+    }
+
+    /* ════════════════════════════════
+        SEZIONE PRODUZIONE (verde scuro)
+       ════════════════════════════════ */
+    .sezione-produzione {
+      background-color: var(--verde-scuro);
+      width: 100%;
+      padding: 28px 0 24px;
+    }
+
+    .sezione-produzione h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.9rem;
+      color: #EDFFEA;
+    }
+
+    /* ════════════════════════════════
+        SEZIONE TESTO (crema)
+       ════════════════════════════════ */
+    .sezione-testo {
+      background-color: var(--crema);
+      width: 100%;
+      padding: 32px 0 40px;
+    }
+
+    .paragrafo {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--testo);
+      margin-bottom: 24px;
+    }
+
+    .definizione-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--verde-scuro);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ════════════════════════════════
+        SEZIONE GRAFICO (blu scuro)
+       ════════════════════════════════ */
+    .sezione-grafico {
+      background: linear-gradient(135deg, #0a1f33 0%, #0d2b47 100%);
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .sezione-grafico h2 {
+      color: #e0f0ff;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .sezione-grafico p {
+      color: #7aadcc;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    .chart-wrapper {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ════════════════════════════════
+        SEZIONE EFFETTI (bianca/crema)
+       ════════════════════════════════ */
+    .sezione-effetti {
+      background-color: var(--crema);
+      width: 100%;
+      padding: 36px 0 48px;
+    }
+
+    .section-title-bar {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--verde-scuro);
+      border-bottom: 2px solid var(--verde-scuro);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Blocchi testo + immagine ── */
+    .blocco {
+      margin-bottom: 40px;
+    }
+
+    /* Immagini paesaggistiche (suolo, mare) */
+    .img-landscape {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-top: 20px;
+      margin-bottom: 4px;
+    }
+
+    .img-landscape img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* Icona salute (circolare, centrata) */
+    .img-icon {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+      margin-bottom: 4px;
+    }
+
+    .img-icon img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background-color: var(--verde-scuro);
+      padding: 20px 28px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #a8b8a8;
+    }
+
+    .footer a {
+      color: #c8d8c8;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    /* ════════════════════════════════
+        TABLET  ≥ 768px
+       ════════════════════════════════ */
+    @media (min-width: 768px) {
+
+      /* Navbar desktop */
+      .hamburger { display: none; }
+
+      .nav-links-desktop {
+        display: flex;
+        gap: 32px;
+      }
+
+      .nav-links-desktop a {
+        color: #e8e4d8;
+        text-decoration: none;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: color 0.2s;
+      }
+
+      .nav-links-desktop a:hover { color: #EDFFEA; }
+      .navbar { padding: 0 48px; }
+
+      /* Hero più grande */
+      .hero .container {
+        padding-top: 60px;
+        padding-bottom: 48px;
+      }
+
+      .title { font-size: 3rem; }
+
+      /* Immagini più alte su tablet/desktop */
+      .img-landscape { height: 300px; }
+
+      /* Layout 2 colonne per blocchi testo+immagine */
+      .blocco-2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+        align-items: start;
+      }
+
+      .blocco-2col .img-landscape {
+        height: 260px;
+        margin-top: 0;
+      }
+
+      /* Inverte ordine per alternare immagine sx/testo dx */
+      .blocco-2col.inverso .img-landscape {
+        order: -1;
+      }
+
+      /* Icona salute: leggermente più grande */
+      .img-icon img { width: 180px; height: 180px; }
+    }
+
+    /* ════════════════════════════════
+        DESKTOP  ≥ 1100px
+       ════════════════════════════════ */
+    @media (min-width: 1100px) {
+      .title { font-size: 3.6rem; }
+      .img-landscape { height: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">RAEE</div>
+    <div class="nav-links-desktop">
+      <a href="1prova.html">Home</a>
+      <a href="2_provA.html">Cos'è il RAEE</a>
+      <a href="3prova.html">Soluzioni</a>
+      <a href="PROVA_GIOCO.html">GIOCO</a>
+      <a href="bibbliografia.html">INFO PROGETTO</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Apri menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="navMenu">
+    <a href="1prova.html">Home</a>
+    <a href="2_provA.html">Cos'è il RAEE</a>
+    <a href="3prova.html">Soluzioni</a>
+    <a href="PROVA_GIOCO.html">GIOCO</a>
+    <a href="bibbliografia.html">INFO PROGETTO</a>
+  </div>
+
+  <div class="hero">
+    <div class="container">
+      <div class="title">Cosa sono<br>i RAEE?</div>
+      <div class="body-text">
+        I RAEE (Rifiuti da Apparecchiature Elettriche ed Elettroniche) sono
+        tutti quei dispositivi alimentati da corrente elettrica o batterie
+        che, quando non funzionano più o non vengono più utilizzati,
+        diventano rifiuti.
+      </div>
+      <div class="callout">
+        <div class="callout-icon">♻️</div>
+        <div class="callout-text">
+          Conoscerli è il primo passo per gestirli in modo corretto e sostenibile.
+        </div>
+      </div>
+      <div class="section-label">Se vuoi approfondire</div>
+      
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/mGKRsINuGc4" title="Cosa sono i RAEE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      
+      <div class="freccia">↓</div>
+    </div>
+  </div>
+
+  <div class="sezione-produzione">
+    <div class="container">
+      <h2>Produzione RAEE</h2>
+    </div>
+  </div>
+
+  <div class="sezione-testo">
+    <div class="container">
+      <div class="paragrafo">
+        Le Apparecchiature Elettriche ed Elettroniche (AEE) sono diventate
+        parte integrante della nostra quotidianità. Tuttavia, quando giungono
+        a fine vita, si trasformano in RAEE, una categoria di rifiuti che
+        richiede una gestione specializzata per ragioni ambientali e di sicurezza.
+      </div>
+      <div class="definizione-label">Definizione normativa</div>
+      <div class="paragrafo">
+        Secondo il D.Lgs. 49/2014, che recepisce la Direttiva europea WEEE,
+        i RAEE comprendono tutti i rifiuti derivanti da apparecchiature che
+        dipendono da correnti elettriche o da campi elettromagnetici per il
+        corretto funzionamento, nonché le apparecchiature per la generazione,
+        il trasferimento e la misurazione di tali correnti.
+      </div>
+    </div>
+  </div>
+
+  <div class="sezione-grafico">
+    <div class="container">
+      <h2>Raccolta RAEE per Raggruppamento</h2>
+      <p>Totale: 90.054.210 kg</p>
+      <div class="chart-wrapper">
+        <canvas id="raeeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="sezione-effetti">
+    <div class="container">
+
+      <div class="section-title-bar">Gli effetti sull'ambiente</div>
+
+      <div class="blocco blocco-2col">
+        <div>
+          <p class="paragrafo">
+            Quando i RAEE vengono abbandonati nell'ambiente o smaltiti in modo scorretto,
+            il terreno è tra gli elementi più colpiti. All'interno di molti dispositivi
+            elettronici sono presenti <strong>sostanze tossiche</strong> come piombo,
+            mercurio, cadmio ed altri metalli pesanti che, con il passare del tempo,
+            possono fuoriuscire e infiltrarsi nel <strong>suolo</strong>.
+            <br><br>
+            Questo processo altera l'<strong>equilibrio naturale</strong> del terreno,
+            <strong>riducendone la fertilità</strong> e compromettendo la crescita delle
+            piante. Le sostanze tossiche possono raggiungere le
+            <strong>falde acquifere sotterranee</strong>, contaminando
+            <strong>l'acqua utilizzata da animali, agricoltura e persone</strong>.
+          </p>
+        </div>
+        <div class="img-landscape">
+          <img src="img_suolo.png" alt="Rifiuti elettronici nel suolo" />
+        </div>
+      </div>
+
+      <div class="blocco blocco-2col inverso">
+        <div>
+          <p class="paragrafo">
+            Quando i RAEE vengono dispersi nei <strong>fiumi</strong> o nei
+            <strong>mari</strong>, possono rilasciare sostanze tossiche e
+            <strong>piccoli frammenti inquinanti</strong> molto dannosi per
+            l'ambiente acquatico. Pesci, tartarughe e altri
+            <strong>animali marini</strong> rischiano di <strong>ingerire</strong>
+            queste particelle, subendo gravi conseguenze per la loro salute e per
+            l'equilibrio dell'ecosistema. Le sostanze chimiche possono
+            <strong>accumularsi nell'acqua e nella catena alimentare</strong>,
+            arrivando indirettamente anche all'<strong>uomo</strong>.
+          </p>
+        </div>
+        <div class="img-landscape">
+          <img src="img_mare.png" alt="Apparecchio elettronico abbandonato in mare" />
+        </div>
+      </div>
+
+      <div class="section-title-bar">Gli effetti sulla salute</div>
+
+      <div class="blocco">
+        <p class="paragrafo">
+          Quando i RAEE non vengono smaltiti correttamente, possono avere
+          <strong>effetti diretti e indiretti</strong> anche sulla
+          <strong>salute dell'uomo</strong>. L'esposizione prolungata a queste
+          sostanze può causare problemi al sistema nervoso, ai reni e all'apparato
+          respiratorio, oltre ad <strong>aumentare i rischi</strong> nel
+          <strong>lungo periodo</strong>.
+          <br><br>
+          Anche <strong>chi lavora</strong> nello <strong>smaltimento informale</strong>
+          dei rifiuti elettronici è spesso esposto a condizioni pericolose, senza
+          adeguate protezioni. Per questo una gestione corretta del RAEE è
+          fondamentale per <strong>tutelare la salute delle persone</strong>.
+        </p>
+        <div class="img-icon">
+          <img src="img_salute.png" alt="Icona effetti sulla salute" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    Informazioni reperite da <a href="https://www.cdcraee.it/" target="_blank">CDCRAEE</a>
+    &nbsp;·&nbsp;
+    <a href="1prova.html">← Torna alla home</a>
+  </div>
+
+  <script>
+    var btn  = document.getElementById('hamburger');
+    var menu = document.getElementById('navMenu');
+    btn.addEventListener('click', function() {
+      menu.classList.toggle('aperto');
+    });
+    document.querySelectorAll('#navMenu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('aperto');
+      });
+    });
+  </script>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const ctx = document.getElementById("raeeChart").getContext("2d");
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: [
+          "R1 - Freddo / Grandi Bianchi",
+          "R2 - Lavatrici / Grandi Elettrodomestici",
+          "R3 - TV / Monitor",
+          "R4 - Piccoli Elettrodomestici",
+          "R5 - Sorgenti Luminose"
+        ],
+        datasets: [{
+          data: [23748313, 37844979, 8382279, 20621246, 457393],
+          backgroundColor: ["#7EC8E3","#9B59B6","#E67E22","#27AE60","#F1C40F"],
+          borderWidth: 0,
+          hoverOffset: 12
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          datalabels: {
+            color: "#ffffff",
+            font: { size: 13, weight: "bold" },
+            formatter: function(value, context) {
+              const total = context.dataset.data.reduce((a,b) => a+b, 0);
+              const pct = ((value/total)*100).toFixed(1);
+              return pct < 2 ? "" : pct + "%";
+            }
+          },
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "#c8dff0",
+              font: { size: 12 },
+              padding: 16,
+              boxWidth: 14,
+              boxHeight: 14
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.parsed;
+                const total = context.dataset.data.reduce((a,b) => a+b, 0);
+                const pct = ((value/total)*100).toFixed(1);
+                const formatted = value.toLocaleString("it-IT");
+                return ` ${formatted} kg  (${pct}%)`;
+              }
+            },
+            backgroundColor: "#0d2137",
+            borderColor: "#2a4a6b",
+            borderWidth: 1,
+            titleColor: "#e0f0ff",
+            bodyColor: "#90cdf4",
+            padding: 10
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

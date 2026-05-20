@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEE – Dal futuro alla risorsa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde-scuro: #2c3a2c;
+      --crema: #f5f2ec;
+      --ambra: #c8a96e;
+      --testo: #3a3a3a;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--testo);
+      background-color: var(--verde-scuro);
+    }
+
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 52px;
+      background-color: var(--verde-scuro);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      color: #EDFFEA;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links-desktop { display: none; }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: #EDFFEA;
+      border-radius: 2px;
+    }
+
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 52px; left: 0;
+      width: 100%;
+      background-color: var(--verde-scuro);
+      flex-direction: column;
+      z-index: 99;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .nav-menu.aperto { display: flex; }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      color: #e8e4d8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(0,0,0,0.15);
+      color: #EDFFEA;
+    }
+
+    /* ════════════════════════════════
+       CONTAINER
+    ════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ════════════════════════════════
+       SEZIONE VERDE (parte superiore)
+    ════════════════════════════════ */
+    .sezione-verde {
+      background-color: var(--verde-scuro);
+      color: #ffffff;
+      padding-top: 80px;
+      padding-bottom: 48px;
+    }
+
+    .titolo-pagina {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .testo-intro {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: #d8e8d8;
+      margin-bottom: 36px;
+    }
+
+    /* ── Le 4 R ── */
+    .quattro-r {
+      margin-bottom: 8px;
+    }
+
+    .r-riga {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .r-lettera {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--ambra);
+      line-height: 1;
+      min-width: 36px;
+    }
+
+    .r-contenuto { flex: 1; }
+
+    .r-parola {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .r-descrizione {
+      font-size: 0.82rem;
+      color: #b0c8b0;
+    }
+
+    /* ════════════════════════════════
+       SEZIONE CREMA — soluzioni pratiche
+    ════════════════════════════════ */
+    .sezione-crema {
+      background-color: var(--crema);
+      color: var(--testo);
+      padding: 40px 0;
+    }
+
+    .titolo-sezione {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--verde-scuro);
+      margin-bottom: 16px;
+    }
+
+    .testo-sezione {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--testo);
+      margin-bottom: 28px;
+    }
+
+    .sotto-titolo {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ambra);
+      margin-bottom: 8px;
+    }
+
+    .separatore {
+      height: 1px;
+      background-color: rgba(44, 58, 44, 0.15);
+      margin: 24px 0;
+    }
+
+    /* ── Bottone ── */
+    .btn-verde {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      background-color: var(--verde-scuro);
+      color: #ffffff;
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-verde:hover {
+      background-color: #3d5a3d;
+    }
+
+    /* ════════════════════════════════
+       NAVIGAZIONE FINALE
+    ════════════════════════════════ */
+    .sezione-nav-finale {
+      background-color: var(--crema);
+      padding: 0 0 40px;
+    }
+
+    .nav-finale-titolo {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--verde-scuro);
+      margin-bottom: 20px;
+      padding-top: 40px;
+    }
+
+    .nav-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background-color: #ffffff;
+      border: 1px solid rgba(44,58,44,0.15);
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .nav-card:hover { background-color: #eae7df; }
+
+    .nav-card-testo { flex: 1; }
+
+    .nav-card-label {
+      font-size: 0.72rem;
+      color: #8a9a8a;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .nav-card-nome {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--verde-scuro);
+    }
+
+    .nav-card-freccia {
+      font-size: 1.2rem;
+      color: #8a9a8a;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background-color: var(--verde-scuro);
+      padding: 18px 28px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6a8a6a;
+    }
+
+    .footer a {
+      color: #8aaa8a;
+      text-decoration: none;
+    }
+
+    .footer a:hover { color: #EDFFEA; }
+
+    /* ════════════════════════════════
+       TABLET  ≥ 768px
+    ════════════════════════════════ */
+    @media (min-width: 768px) {
+
+      .hamburger { display: none; }
+
+      .nav-links-desktop {
+        display: flex;
+        gap: 32px;
+      }
+
+      .nav-links-desktop a {
+        color: #e8e4d8;
+        text-decoration: none;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: color 0.2s;
+      }
+
+      .nav-links-desktop a:hover { color: #EDFFEA; }
+      .navbar { padding: 0 48px; }
+
+      .titolo-pagina { font-size: 3rem; }
+
+      .nav-cards { flex-direction: row; }
+      .nav-card { flex: 1; }
+
+      .btn-verde { width: auto; display: inline-block; }
+    }
+
+    /* ════════════════════════════════
+       DESKTOP  ≥ 1200px
+    ════════════════════════════════ */
+    @media (min-width: 1200px) {
+      .titolo-pagina { font-size: 3.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar">
+    <div class="nav-logo">RAEE</div>
+
+    <div class="nav-links-desktop">
+      <a href="2_provA.html">Home</a>
+      <a href="1prova.html">Cos'è il RAEE</a>
+      <a href="2_provA.html">Soluzioni</a>
+      <a href="PROVA_GIOCO.html">GIOCO</a>
+      <a href="bibbliografia.html">INFO PROGETTO</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Apri menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="navMenu">
+    <a href="1prova.html">Home</a>
+    <a href="2_provA.html">Cos'è il RAEE</a>
+    <a href="PROVA_GIOCO.html">GIOCO</a>
+    <a href="bibbliografia.html">INFO PROGETTO</a>
+    
+  </div>
+
+  <!-- ══ SEZIONE VERDE — titolo e 4R ══ -->
+  <div class="sezione-verde">
+    <div class="container">
+
+      <div class="titolo-pagina">Dal futuro<br>alla risorsa</div>
+
+      <p class="testo-intro">
+        Ridurre l'impatto dei rifiuti elettronici (RAEE) è più semplice di
+        quanto pensi e bastano piccoli gesti quotidiani.
+        Il primo step da seguire riguarda il modello <strong>4R</strong>.
+      </p>
+
+      <div class="quattro-r">
+
+        <div class="r-riga">
+          <span class="r-lettera">R</span>
+          <div class="r-contenuto">
+            <span class="r-parola">iduci</span>
+            <div class="r-descrizione">(l'acquisto non necessario di dispositivi)</div>
+          </div>
+        </div>
+
+        <div class="r-riga">
+          <span class="r-lettera">R</span>
+          <div class="r-contenuto">
+            <span class="r-parola">iusa</span>
+            <div class="r-descrizione">(dai una seconda vita all'oggetto)</div>
+          </div>
+        </div>
+
+        <div class="r-riga">
+          <span class="r-lettera">R</span>
+          <div class="r-contenuto">
+            <span class="r-parola">ipara</span>
+            <div class="r-descrizione">(aggiusta e non sostituire il dispositivo)</div>
+          </div>
+        </div>
+
+        <div class="r-riga">
+          <span class="r-lettera">R</span>
+          <div class="r-contenuto">
+            <span class="r-parola">icicla</span>
+            <div class="r-descrizione">(porta il dispositivo al punto di raccolta)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SEZIONE CREMA — soluzioni pratiche ══ -->
+  <div class="sezione-crema">
+    <div class="container">
+
+      <div class="titolo-sezione">Più soluzioni per il riciclo</div>
+
+      <p class="testo-sezione">
+        Se il dispositivo non è più utilizzabile, l'unica soluzione è il
+        riciclo corretto. Per far ciò si possono svolgere diverse attività.
+      </p>
+
+      <div class="sotto-titolo">L'isola ecologica</div>
+      <p class="testo-sezione">
+        Il tuo comune di residenza ha nelle vicinanze almeno una di queste
+        piattaforme, dove puoi portare i tuoi RAEE. I rifiuti possono essere
+        divisi per categoria e vengono poi avviati al riciclo corretto.
+      </p>
+
+      <div class="separatore"></div>
+
+      <div class="sotto-titolo">Il ritiro uno contro uno</div>
+      <p class="testo-sezione">
+        Il venditore da cui acquisti il nuovo dispositivo è obbligato ad
+        accettare il tuo device inutilizzabile. Puoi quindi consegnarlo
+        direttamente in negozio al momento dell'acquisto.
+      </p>
+
+      <div class="separatore"></div>
+
+      <div class="sotto-titolo">Il ritiro uno contro zero</div>
+      <p class="testo-sezione">
+        Questa è una soluzione comoda per depositare i piccoli RAEE. I grandi
+        negozi di elettrodomestici (superficie ≥ 400 m²) sono obbligati a
+        ritirare i piccoli oggetti elettronici senza alcun obbligo di acquisto.
+      </p>
+
+      <div class="separatore"></div>
+
+      <a href="https://www.cdcraee.it/centri-di-raccolta-comunali/" target="_blank" class="btn-verde">
+        Trova i centri di raccolta più vicini a te
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══ NAVIGAZIONE FINALE ══ -->
+  <div class="sezione-nav-finale">
+    <div class="container">
+
+      <div class="nav-finale-titolo">Esplora le altre sezioni</div>
+
+      <div class="nav-cards">
+
+        <a href="1prova.html" class="nav-card">
+          <div class="nav-card-testo">
+            <div class="nav-card-label">Pagina 1</div>
+            <div class="nav-card-nome">Home</div>
+          </div>
+          <span class="nav-card-freccia">→</span>
+        </a>
+
+        <a href="2_provA.html" class="nav-card">
+          <div class="nav-card-testo">
+            <div class="nav-card-label">Pagina 2</div>
+            <div class="nav-card-nome">Cosa sono i RAEE?</div>
+          </div>
+          <span class="nav-card-freccia">→</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer">
+    Informazioni reperite da <a href="https://www.cdcraee.it/" target="_blank">CDCRAEE</a>
+    <a href="https://www.gruppoiren.it/it/everyday/abcircular/2023/principi-economia-circolare-4r.html" target="_blank">IREN</a>
+  </div>
+
+  <script>
+    var btn  = document.getElementById('hamburger');
+    var menu = document.getElementById('navMenu');
+    btn.addEventListener('click', function() {
+      menu.classList.toggle('aperto');
+    });
+    document.querySelectorAll('#navMenu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('aperto');
+      });
+    });
+  </script>
+
+</body>
+</html>

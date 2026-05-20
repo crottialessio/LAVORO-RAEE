@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEE – Bibliografia e Fonti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde-scuro: #2c3a2c;
+      --crema: #f5f2ec;
+      --testo: #3a3a3a;
+    }
+
+    body {
+      background-color: var(--crema);
+      font-family: 'Lato', sans-serif;
+      color: var(--testo);
+      padding-top: 80px; /* Spazio per la navbar fissa */
+    }
+
+    /* ════════════════════════════════
+        NAVBAR (Identica alle altre pagine)
+       ════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 52px;
+      background-color: var(--verde-scuro);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      color: #EDFFEA;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links-desktop { display: none; }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: #EDFFEA;
+      border-radius: 2px;
+    }
+
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 52px; left: 0;
+      width: 100%;
+      background-color: var(--verde-scuro);
+      flex-direction: column;
+      z-index: 99;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .nav-menu.aperto { display: flex; }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      color: #e8e4d8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(0,0,0,0.15);
+      color: #EDFFEA;
+    }
+
+    /* ════════════════════════════════
+        CONTENUTO PRINCIPALE
+       ════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 28px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--verde-scuro);
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--verde-scuro);
+      padding-bottom: 12px;
+    }
+
+    /* ── Blocco Chi Siamo ── */
+    .sezione-chi-siamo {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+    }
+
+    .chi-siamo-titolo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: var(--verde-scuro);
+      margin-bottom: 16px;
+    }
+
+    .chi-siamo-testo {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--testo);
+    }
+
+    .chi-siamo-evidenziato {
+      color: var(--verde-scuro);
+      font-weight: 700;
+    }
+
+    /* ── Fonti e Liste ── */
+    .section-subtitle {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--verde-scuro);
+      margin: 36px 0 12px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .fonti-list {
+      list-style-type: none;
+      margin-bottom: 24px;
+    }
+
+    .fonti-list li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 3px solid #69765B;
+    }
+
+    .fonti-list a {
+      color: #2962ff;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .fonti-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background-color: var(--verde-scuro);
+      padding: 20px 28px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #a8b8a8;
+      margin-top: 60px;
+    }
+
+    .footer a {
+      color: #c8d8c8;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    /* ════════════════════════════════
+        RESPONSIVE (Tablet/Desktop)
+       ════════════════════════════════ */
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+      .nav-links-desktop { display: flex; gap: 32px; }
+      .nav-links-desktop a {
+        color: #e8e4d8;
+        text-decoration: none;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: color 0.2s;
+      }
+      .nav-links-desktop a:hover { color: #EDFFEA; }
+      .navbar { padding: 0 48px; }
+      .title { font-size: 3rem; }
+      .chi-siamo-titolo { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">RAEE</div>
+    <div class="nav-links-desktop">
+      <a href="1prova.html">Home</a>
+      <a href="2_provA.html">Cos'è il RAEE</a>
+      <a href="3prova.html">Soluzioni</a>
+      <a href="PROVA_GIOCO.html">GIOCO</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Apri menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="navMenu">
+    <a href="1prova.html">Home</a>
+    <a href="2_provA.html">Cos'è il RAEE</a>
+    <a href="3prova.html">Soluzioni</a>
+    <a href="PROVA_GIOCO.html">GIOCO</a>
+    <a href="bibbliografia.html">INFO PROGETTO</a>
+  </div>
+
+  <div class="container">
+    <h1 class="title">Bibliografia e Fonti</h1>
+
+    <div class="sezione-chi-siamo">
+      <h2 class="chi-siamo-titolo">Chi Siamo</h2>
+      <div class="chi-siamo-testo">
+        <p>
+          PROGETTO A CURA DI CROTTI ALESSIO E LECCHI DIEGO
+          siamo 2 studenti del ITI MARCONI di dalmine, e facciamo parte della classe 3Ai dell'indirizzo informatica
+          
+        </p>
+        <p> crotti.alessio.09@itisdalmine.edu.it          lecchi.diego.09@itisdalmine.edu.it</p>
+        <br>
+        
+      </div>
+    </div>
+
+    <h2 class="section-subtitle">Fonti Normative</h2>
+    <ul class="fonti-list">
+      <li>Decreto Legislativo 14 marzo 2014, n. 49 - <em>Attuazione della direttiva 2012/19/UE sui rifiuti di apparecchiature elettriche ed elettroniche (RAEE) è la prima normativa RAEE</em>.</li>
+      <li>Accordo di Programma RAEE 2025-2027 - <em>è un piano che mette sul piatto più investimenti e più premi economici per convincere enti locali e cittadini a differenziare seriamente la tecnologia obsoleta.</em>.</li>
+    </ul>
+
+    <h2 class="section-subtitle">Bibliografia e sitografia</h2>
+    <ul class="fonti-list">
+      <li><a href="https://www.cdcraee.it/">Centro di Coordinamento RAEE (CDCRAEE)</a></li>
+      <li><a href="https://www.mase.gov.it/portale/home">Decreto Legislativo 14 marzo 2014, n. 49</a></li>
+      <li><a href="https://www.mase.gov.it/portale/home">Decreto Legislativo 14 marzo 2014, n. 49</a></li>
+      <li><a href="https://erion.it/it/news/nel-2023-litalia-ha-raccolto-348-051-tonnellate-di-raee/">Contesto generale</a></li>
+      <li><a href="https://www.arpa.veneto.it/temi-ambientali/rifiuti/rifiuti-speciali/particolari-categorie-di-rifiuto/raee">Contesto generale-- ARPA VENETO</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <a href="1prova.html">← Torna alla home</a>
+  </div>
+
+  <script>
+    var btn  = document.getElementById('hamburger');
+    var menu = document.getElementById('navMenu');
+    btn.addEventListener('click', function() {
+      menu.classList.toggle('aperto');
+    });
+    document.querySelectorAll('#navMenu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('aperto');
+      });
+    });
+  </script>
+
+</body>
+</html>

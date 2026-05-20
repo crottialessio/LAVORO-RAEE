@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEE – Raccogli & Schiva Hardcore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde-scuro: #2c3a2c;
+      --crema: #f5f2ec;
+      --testo: #3a3a3a;
+    }
+
+    body {
+      background-color: var(--crema);
+      font-family: 'Lato', sans-serif;
+      color: var(--testo);
+      padding-top: 52px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ════════════════════════════════
+        NAVBAR
+       ════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 52px;
+      background-color: var(--verde-scuro);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      color: #EDFFEA;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links-desktop { display: none; }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: #EDFFEA;
+      border-radius: 2px;
+    }
+
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 52px; left: 0;
+      width: 100%;
+      background-color: var(--verde-scuro);
+      flex-direction: column;
+      z-index: 99;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .nav-menu.aperto { display: flex; }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      color: #e8e4d8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(0,0,0,0.15);
+      color: #EDFFEA;
+    }
+
+    /* ════════════════════════════════
+        CONTAINER STRUTTURALE
+       ════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .sezione-gioco-header {
+      padding-top: 30px;
+      padding-bottom: 15px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--verde-scuro);
+      margin-bottom: 12px;
+    }
+
+    .body-text {
+      font-size: 0.93rem;
+      line-height: 1.65;
+      color: var(--testo);
+      margin-bottom: 16px;
+    }
+
+    /* ════════════════════════════════
+        CONTENITORE AREA DI GIOCO
+       ════════════════════════════════ */
+    .gioco-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    #game-container {
+      width: min(100vw - 32px, 480px);
+      height: 520px;
+      background: #111;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    /* ════════════════════════════════
+        FOOTER
+       ════════════════════════════════ */
+    .footer {
+      background-color: var(--verde-scuro);
+      padding: 20px 28px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #a8b8a8;
+      margin-top: auto;
+    }
+
+    .footer a {
+      color: #c8d8c8;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+      .nav-links-desktop { display: flex; gap: 32px; }
+      .nav-links-desktop a {
+        color: #e8e4d8; text-decoration: none; font-size: 0.78rem;
+        letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+        transition: color 0.2s;
+      }
+      .nav-links-desktop a:hover { color: #EDFFEA; }
+      .navbar { padding: 0 48px; }
+      .sezione-gioco-header { padding-top: 50px; }
+      .title { font-size: 3rem; }
+      #game-container { height: 580px; }
+    }
+
+    @media (max-width: 520px) {
+      #game-container {
+        width: 100vw;
+        height: 62dvh;
+        border-radius: 0;
+      }
+      .gioco-wrapper {
+        margin-left: -28px;
+        margin-right: -28px;
+        margin-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">RAEE</div>
+    <div class="nav-links-desktop">
+      <a href="1prova.html">Home</a>
+      <a href="2_provA.html">Cos'è il RAEE</a>
+      <a href="3prova.html">Soluzioni</a>
+      <a href="bibbliografia.html">INFO PROGETTO</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Apri menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="navMenu">
+    <a href="1prova.html">Home</a>
+    <a href="2_provA.html">Cos'è il RAEE</a>
+    <a href="3prova.html">Soluzioni</a>
+    <a href="PROVA_GIOCO.html">GIOCO</a>
+    <a href="bibbliografia.html">INFO PROGETTO</a>
+  </div>
+
+  <div class="sezione-gioco-header">
+    <div class="container">
+      <h1 class="title">ACCHIAPPIA I RAEE:<br>Sfida DIFFICILE</h1>
+      <p class="body-text">
+        Attenzione: i rifiuti non conformi stanno aumentando a dismisura! Riuscirai a mantenere il controllo e raggiungere il livello 4? riuscirai a sanificare la terra?
+      </p>
+    </div>
+  </div>
+
+  <div class="gioco-wrapper">
+    <div id="game-container"></div>
+  </div>
+
+  <div class="footer">
+    
+    
+    <a href="1prova.html">← Torna alla home</a>
+  </div>
+
+  <script>
+    var btn  = document.getElementById('hamburger');
+    var menu = document.getElementById('navMenu');
+    btn.addEventListener('click', function() { menu.classList.toggle('aperto'); });
+  </script>
+
+  <script>
+  (function() {
+    const MOUNT_ID  = 'game-container';
+
+    /* ════════════════════════════════════════════════════════════
+        DOVE METTERE L'IMMAGINE DI SFONDO?
+        Sostituisci i nomi dei file qui sotto con il percorso delle tue immagini.
+        Se hai un'unica immagine per tutto, scrivi lo stesso nome in tutte e tre.
+       ════════════════════════════════════════════════════════════ */
+    const BG_SMALL  = 'immagine_mobile.png';   // Sfondo per smartphone stretti
+    const BG_MEDIUM = 'immagine.png';          // Sfondo per tablet / schermi medi
+    const BG_LARGE  = 'immagine_desktop.png';  // Sfondo per computer desktop
+
+    // Velocità aumentate leggermente per rendere difficile il gioco avanzato
+    const SPEED_STEPS = [170, 225, 290, 375, 460]; 
+    const SPAWN_BASE  = 1100; // Cadono più rapidamente (da 1300 a 1100)
+    const SPAWN_STEP  = 100;
+    const SPAWN_MIN   = 450;
+
+    const mount = document.getElementById(MOUNT_ID);
+    if (!mount) return;
+
+    if (!document.getElementById('rs-style')) {
+      const style = document.createElement('style');
+      style.id = 'rs-style';
+      style.textContent = `
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;600&display=swap');
+  #rs-root *{margin:0;padding:0;box-sizing:border-box;}
+  #rs-root{
+    --panel:#6b7c4d;--panel2:#5a6940;--panel3:#4a5633;
+    --text-bar:#f0edd6;--text-dim:#c8d4a0;--accent:#f0edd6;
+    --border:rgba(255,255,255,0.18);
+    font-family:'DM Sans',sans-serif; color:#2c2c1e;
+    display:flex;flex-direction:column; overflow:hidden;user-select:none;
+    width:100%;height:100%;position:relative;
+  }
+  #rs-infobar{
+    background:var(--panel); height:44px; padding:0 12px;
+    display:flex;align-items:center;justify-content:space-between;
+    flex-shrink:0;border-bottom:2px solid var(--panel3);
+    box-shadow:0 2px 10px rgba(0,0,0,.35);z-index:10;
+  }
+  .rs-bar-title{
+    font-family:'Archivo Black',sans-serif; font-size: 11px;
+    letter-spacing:1px;color:var(--accent);text-transform:uppercase;
+  }
+  .rs-bar-stats{ display:flex;align-items:center; gap:10px; justify-content: flex-end; flex-grow: 1; }
+  .rs-stat{display:flex;align-items:center;gap:4px;}
+  .rs-stat-label{font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-dim);}
+  .rs-stat-val{font-family:'Archivo Black',sans-serif;font-size:15px;color:var(--accent);line-height:1;}
+  .rs-stat-sep{width:1px;height:16px;background:var(--border);}
+  #rs-wrap{flex:1;position:relative;overflow:hidden;touch-action:none;}
+  #rs-wrap canvas{display:block;width:100%;height:100%;}
+  #rs-combo{
+    position:absolute;top:42%;left:50%; transform:translate(-50%,-50%);
+    font-family:'Archivo Black',sans-serif; font-size:clamp(20px,6cqi,42px);
+    color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.5); pointer-events:none;opacity:0;z-index:15;white-space:nowrap;
+  }
+  #rs-overlay{
+    position:absolute;inset:0; display:flex;align-items:center;justify-content:center;
+    background:rgba(20,10,10,.82);z-index:20; backdrop-filter:blur(6px);padding:12px;
+  }
+  #rs-overlay.rs-hidden{display:none;}
+  .rs-modal{
+    background:var(--panel);border-radius:14px; padding:20px 16px;
+    text-align:center;max-width:380px;width:100%; border:2px solid var(--panel3);
+    box-shadow:0 15px 40px rgba(0,0,0,.5); max-height:95%;overflow-y:auto;
+  }
+  .rs-modal h1{ font-family:'Archivo Black',sans-serif; font-size:26px; color:var(--accent); margin-bottom:6px; text-transform:uppercase; }
+  .rs-modal p{font-size:12px;color:var(--text-dim);line-height:1.5;margin-bottom:14px;}
+  #rs-result-container{ margin-bottom: 14px; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px; }
+  #rs-result-container.rs-hidden{display:none;}
+  .rs-big-score{ font-family:'Archivo Black',sans-serif;font-size:44px; color:var(--accent); line-height:1; }
+  #rs-result-msg{font-family:'Archivo Black',sans-serif;font-size:14px;color:var(--accent);}
+  .rs-legend{ display:grid;grid-template-columns:1fr 1fr; gap:4px 10px; justify-items:start; margin-bottom:16px; background:rgba(0,0,0,.1); border-radius:8px;padding:10px; }
+  .rs-legend-row{font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:4px;}
+  .rs-legend-row strong{color:var(--accent);}
+  .rs-btn{
+    display:inline-block;background:var(--accent);color:var(--panel3); border:none;border-radius:8px;padding:12px 32px;
+    font-family:'Archivo Black',sans-serif;font-size:14px; text-transform:uppercase;cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.2);
+  }
+  .rs-btn:hover{background:#fff;}
+      `;
+      document.head.appendChild(style);
+    }
+
+    mount.style.position = 'relative';
+    mount.style.overflow = 'hidden';
+    mount.innerHTML = `
+  <div id="rs-root">
+    <div id="rs-infobar">
+      <div class="rs-bar-title">⚠️ HARDCORE RAEE</div>
+      <div class="rs-bar-stats">
+        <div class="rs-stat">
+          <span class="rs-stat-label">Punti</span>
+          <span class="rs-stat-val" id="rs-score">0</span>
+        </div>
+        <div class="rs-stat-sep"></div>
+        <div class="rs-stat">
+          <span class="rs-stat-label">Vite</span>
+          <span class="rs-stat-val" id="rs-lives">💖×3</span>
+        </div>
+        <div class="rs-stat-sep"></div>
+        <div class="rs-stat">
+          <span class="rs-stat-label">Lvl</span>
+          <span class="rs-stat-val" id="rs-level">1</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="rs-wrap">
+      <canvas id="rs-canvas"></canvas>
+      <div id="rs-combo"></div>
+
+      <div id="rs-overlay">
+        <div class="rs-modal" id="rs-game-modal">
+          <h1>MODALITÀ DIFFICILE</h1>
+          <p id="rs-modal-desc">Gli oggetti rossi non conformi cadono in massa!<br>Riuscirai a sopravvivere fino al Livello 4?</p>
+          
+          <div id="rs-result-container" class="rs-hidden">
+            <div class="rs-big-score" id="rs-final-score">0</div>
+            <div id="rs-result-msg"></div>
+          </div>
+
+          <div class="rs-legend">
+            <div class="rs-legend-row">📺 RAEE Buoni <strong>Punti</strong></div>
+            <div class="rs-legend-row" style="color:#ff8080">🩼 Rossi <strong>Danno!</strong></div>
+          </div>
+          <button class="rs-btn" id="rs-btn-action">Inizia la Sfida</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+    const canvas      = document.getElementById('rs-canvas');
+    const ctx         = canvas.getContext('2d');
+    const wrap        = document.getElementById('rs-wrap');
+    const overlay     = document.getElementById('rs-overlay');
+    const modalDesc   = document.getElementById('rs-modal-desc');
+    const resultCont  = document.getElementById('rs-result-container');
+    const comboEl     = document.getElementById('rs-combo');
+    const scoreEl     = document.getElementById('rs-score');
+    const livesEl     = document.getElementById('rs-lives');
+    const levelEl     = document.getElementById('rs-level');
+    const finalScore  = document.getElementById('rs-final-score');
+    const resultMsg   = document.getElementById('rs-result-msg');
+    const btnAction   = document.getElementById('rs-btn-action');
+
+    btnAction.addEventListener('click', startGame);
+
+    const imgs = {};
+    function loadBg(key, src) { const img = new Image(); img.src = src; imgs[key] = img; }
+    loadBg('small', BG_SMALL); loadBg('medium', BG_MEDIUM); loadBg('large', BG_LARGE);
+
+    function getBgKey() {
+      const w = wrap.clientWidth;
+      if (w < 420) return 'small';
+      if (w <= 700) return 'medium';
+      return 'large';
+    }
+
+    let W, H;
+    function resize() { W = canvas.width = wrap.clientWidth; H = canvas.height = wrap.clientHeight; }
+    resize();
+    new ResizeObserver(resize).observe(wrap);
+
+    let gameState = 'idle', score = 0, lives = 3, level = 1;
+    let catchCount = 0, combo = 0, basketX = 0;
+    let objects = [], particles = [], lastTime = 0, spawnTimer = 0;
+
+    function getDifficulty() {
+      const idx = Math.min(level - 1, SPEED_STEPS.length - 1);
+      const spd = SPEED_STEPS[idx];
+      const spawn = Math.max(SPAWN_MIN, SPAWN_BASE - (level - 1) * SPAWN_STEP);
+      return { spd, spawn };
+    }
+
+    let shakeFrames = 0, shakeAmt = 0;
+    function triggerShake() { shakeAmt=12; shakeFrames=12; }
+
+    wrap.addEventListener('mousemove', e => {
+      const r = wrap.getBoundingClientRect(); basketX = e.clientX - r.left;
+    });
+    wrap.addEventListener('touchstart', e => { basketX = e.touches[0].clientX - wrap.getBoundingClientRect().left; }, { passive: true });
+    wrap.addEventListener('touchmove',  e => { basketX = e.touches[0].clientX - wrap.getBoundingClientRect().left; }, { passive: true });
+
+    function getBW() { return W < 420 ? 85 : 90; }
+    function getBH() { return W < 420 ? 52 : 56; }
+
+    function drawBasket(x, y) {
+      const BW = getBW(), BH = getBH();
+      ctx.save();
+      ctx.fillStyle = 'rgba(0,0,0,0.2)';
+      ctx.beginPath(); ctx.ellipse(x, y + BH/2 + 4, BW/2+2, 6, 0, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x-BW/2, y); ctx.lineTo(x-BW/2+8, y+BH); ctx.lineTo(x+BW/2-8, y+BH); ctx.lineTo(x+BW/2, y); ctx.closePath();
+      ctx.fillStyle = '#7a5228'; ctx.fill();
+      ctx.strokeStyle = '#a07040'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(x, y, BW/2, 8, 0, 0, Math.PI*2); ctx.fillStyle='#8a6030'; ctx.fill();
+      ctx.strokeStyle='#b08040'; ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ════════════════════════════════════════════════════════════
+        BILANCIAMENTO SPAWN (Aumentati pesantemente i rossi)
+       ════════════════════════════════════════════════════════════ */
+    const TYPES = [
+      { emoji:'📺', pts:10, bad:false, prob:12 }, // calato da 22
+      { emoji:'📱', pts:10, bad:false, prob:10 }, // calato da 18
+      { emoji:'💻', pts:15, bad:false, prob:8 },  // calato da 14
+      { emoji:'🎤', pts:5,  bad:false, prob:10 }, // calato da 20
+      { emoji:'🎥', pts:10, bad:false, prob:6 },  // calato da 11
+      
+      // I malus (rossi) ora occupano circa il 60% della probabilità di spawn totale
+      { emoji:'🩼', pts:0,  bad:true,  prob:28 }, // aumentato da 20
+      { emoji:'🪞', pts:0,  bad:true,  prob:26 }, // aumentato da 18
+      { emoji:'💿', pts:0,  bad:true,  prob:22 }, // aumentato da 13
+    ];
+
+    function spawnObject() {
+      const total = TYPES.reduce((s,t)=>s+t.prob,0);
+      let r = Math.random()*total, type = TYPES[0];
+      for(const t of TYPES){r-=t.prob; if(r<=0){type=t; break;}}
+      const baseSize = W < 420 ? 30 : 28;
+      const size = baseSize + Math.random()*12;
+      const x = size + Math.random()*(W - size*2);
+      const { spd } = getDifficulty();
+      objects.push({ x, y:-size, size, speed: spd*(0.9+Math.random()*0.2), type, wobble:Math.random()*5 });
+    }
+
+    function emitParticles(x, y, color) {
+      for(let i=0;i<10;i++){
+        const a=Math.random()*Math.PI*2, v=50+Math.random()*80;
+        particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-30,r:2+Math.random()*4,color,life:1,decay:1.2+Math.random()});
+      }
+    }
+
+    function showCombo(text) {
+      comboEl.textContent = text; comboEl.style.transition = 'none'; comboEl.style.opacity = '1';
+      comboEl.style.transform = 'translate(-50%,-50%) scale(1.1)';
+      setTimeout(()=>{
+        comboEl.style.transition = 'opacity 0.6s, transform 0.6s'; comboEl.style.opacity = '0';
+        comboEl.style.transform = 'translate(-50%,-50%) scale(0.8)';
+      }, 100);
+    }
+
+    function updateHUD() {
+      scoreEl.textContent = score;
+      livesEl.textContent = `💖×${Math.max(0, lives)}`;
+      levelEl.textContent = level;
+    }
+
+    function loop(ts) {
+      if (gameState !== 'playing') return;
+      const dt = Math.min((ts - lastTime)/1000, 0.1); lastTime = ts;
+
+      let sx=0, sy=0;
+      if (shakeFrames > 0) { sx=(Math.random()-.5)*shakeAmt; sy=(Math.random()-.5)*shakeAmt; shakeFrames--; }
+
+      ctx.save();
+      if (sx||sy) ctx.translate(sx, sy);
+      const img = imgs[getBgKey()];
+      if (img && img.complete && img.naturalWidth > 0) ctx.drawImage(img, 0, 0, W, H);
+      else { ctx.fillStyle = '#2d2020'; ctx.fillRect(0, 0, W, H); } // Sfondo scuro di ripiego tendente al rosso
+      ctx.restore();
+
+      spawnTimer -= dt*1000;
+      if (spawnTimer <= 0) { spawnObject(); spawnTimer = getDifficulty().spawn; }
+
+      const BW = getBW(), BH = getBH(), by = H - BH - 12;
+
+      for (let i=objects.length-1; i>=0; i--) {
+        const o = objects[i]; o.y += o.speed * dt; o.wobble += dt*1.5;
+        const wx = Math.sin(o.wobble)*3;
+
+        ctx.save();
+        if (sx||sy) ctx.translate(sx,sy);
+        ctx.beginPath(); ctx.arc(o.x+wx, o.y, o.size*0.6, 0, Math.PI*2);
+        ctx.fillStyle = o.type.bad ? 'rgba(230,30,30,.65)' : 'rgba(240,237,214,.7)';
+        ctx.fill(); ctx.restore();
+
+        ctx.save();
+        if (sx||sy) ctx.translate(sx,sy);
+        ctx.font = `${o.size}px serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText(o.type.emoji, o.x+wx, o.y); ctx.restore();
+
+        if (Math.abs((o.x+wx)-basketX) < BW/2+o.size*0.4 && Math.abs(o.y-by) < BH/2+o.size*0.4) {
+          if (!o.type.bad) {
+            score += o.type.pts * (combo>=3 ? 2 : 1); catchCount++; combo++;
+            emitParticles(o.x, o.y, '#a8d870');
+            if (combo===3) showCombo('COMBO 🔥');
+            if (catchCount%10===0) { level++; showCombo(`LIVELLO ${level}!`); }
+          } else {
+            lives--; combo=0; emitParticles(o.x, o.y, '#ff4040'); triggerShake();
+            if (lives<=0) { updateHUD(); endGame(); return; }
+          }
+          updateHUD(); objects.splice(i,1); continue;
+        }
+        if (o.y > H+o.size) { if (!o.type.bad) combo=0; objects.splice(i,1); }
+      }
+
+      for (let i=particles.length-1; i>=0; i--) {
+        const p=particles[i]; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=p.decay*dt;
+        if(p.life<=0){particles.splice(i,1);continue;}
+        ctx.globalAlpha=p.life; ctx.fillStyle=p.color;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+
+      drawBasket(basketX, by);
+      requestAnimationFrame(loop);
+    }
+
+    function startGame() {
+      score=0; lives=3; level=1; catchCount=0; combo=0; objects=[]; particles=[]; basketX=W/2;
+      overlay.classList.add('rs-hidden'); updateHUD();
+      gameState='playing'; lastTime=performance.now(); requestAnimationFrame(loop);
+    }
+
+    function endGame() {
+      gameState='over'; finalScore.textContent = score;
+      resultMsg.textContent = level >= 4 ? '🏆 INCREDIBILE! Hai superato il Livello 4!' : `Ti sei fermato al Livello ${level}. Riprova!`;
+      modalDesc.classList.add('rs-hidden'); resultCont.classList.remove('rs-hidden');
+      btnAction.textContent = "Riprova Sfida"; overlay.classList.remove('rs-hidden');
+    }
+  })();
+  </script>
+</body>
+</html>
